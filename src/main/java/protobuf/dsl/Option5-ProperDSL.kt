@@ -110,7 +110,7 @@ fun main(args: Array<String>) {
         features {
             feature {
                 type = Feature.Type.DOCUMENT_TEXT_DETECTION
-                /* doesn't work here by using Dsl type
+                /* :) doesn't work here by using Dsl type
                 build()
                 */
             }
