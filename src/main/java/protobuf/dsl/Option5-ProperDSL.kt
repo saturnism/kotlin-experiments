@@ -98,7 +98,7 @@ fun main(args: Array<String>) {
             source {
                 imageUri = "gs://my-bucket/hello.jpg'"
 
-                /* :( works here if we pass the Builder */
+                /* :( works here if we pass the Builder type */
                 build()
             }
 
@@ -110,7 +110,7 @@ fun main(args: Array<String>) {
         features {
             feature {
                 type = Feature.Type.DOCUMENT_TEXT_DETECTION
-                /* doesn't work here
+                /* doesn't work here by using Dsl type
                 build()
                 */
             }
