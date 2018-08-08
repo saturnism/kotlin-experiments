@@ -2,12 +2,11 @@ package protobuf.dsl.option5
 
 import com.google.cloud.vision.v1.*
 import jdk.nashorn.internal.objects.NativeRegExp.source
-import protobuf.dsl.option3.AnnotateImageRequest
 
 @DslMarker
 annotation class ProtobufDsl
 
-fun annotateImageRequest(block: AnnotateImageRequestDsl.() -> Unit)
+fun AnnotateImageRequest(block: AnnotateImageRequestDsl.() -> Unit)
         : AnnotateImageRequest {
     // Create the real builder here, but not accessible from within the DSL
     // DSL methods delegates to this builder
@@ -53,13 +52,26 @@ class AnnotateImageRequestDsl(private val builder: AnnotateImageRequest.Builder)
 
 @ProtobufDsl
 class FeaturesDsl(private val features: MutableSet<Feature>) {
-    fun feature(block : Feature.Builder.() -> Unit) {
+    fun feature(block : FeatureDsl.() -> Unit) {
         val builder = Feature.newBuilder()
+        val dsl = FeatureDsl(builder)
 
-        builder.block();
+        dsl.block()
 
-        features.add(builder.build())
+        features.add(builder
+                .setType(dsl.type)
+                .setMaxResults(dsl.maxResults)
+                .setModel(dsl.model)
+                .build())
     }
+}
+
+@ProtobufDsl
+class FeatureDsl(private val builder : Feature.Builder,
+                 var type : Feature.Type = Feature.Type.TYPE_UNSPECIFIED,
+                 var maxResults : Int = 0,
+                 var model : String = ""
+) {
 }
 
 @ProtobufDsl
@@ -81,12 +93,14 @@ class ImageDsl(private val builder: Image.Builder) {
 }
 
 fun main(args: Array<String>) {
-    val request = annotateImageRequest {
+    val request = AnnotateImageRequest {
         image {
             source {
                 imageUri = "gs://my-bucket/hello.jpg'"
-            }
 
+                /* :( works here if we pass the Builder */
+                build()
+            }
 
             /* can't do these things here:
             build()
@@ -96,6 +110,9 @@ fun main(args: Array<String>) {
         features {
             feature {
                 type = Feature.Type.DOCUMENT_TEXT_DETECTION
+                /* doesn't work here
+                build()
+                */
             }
             feature {
                 type = Feature.Type.LABEL_DETECTION

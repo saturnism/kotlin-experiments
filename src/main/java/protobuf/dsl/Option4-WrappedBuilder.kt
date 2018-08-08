@@ -6,7 +6,7 @@ import com.google.protobuf.ByteString
 @DslMarker
 annotation class ProtobufDsl
 
-fun annotateImageRequest(block: AnnotateImageRequestDsl.() -> Unit)
+fun AnnotateImageRequest(block: AnnotateImageRequestDsl.() -> Unit)
         : AnnotateImageRequest {
     // Create the real builder here, but not accessible from within the DSL
     // DSL methods delegates to this builder
@@ -71,7 +71,7 @@ class ImageContextDsl(private val builder: ImageContext.Builder) {
 }
 
 fun main(args: Array<String>) {
-    val request = annotateImageRequest {
+    val request = AnnotateImageRequest {
         features {
             feature(Feature.Type.LABEL_DETECTION)
             feature(Feature.Type.DOCUMENT_TEXT_DETECTION)

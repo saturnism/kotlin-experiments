@@ -2,11 +2,12 @@ package protobuf.dsl.option2
 
 import com.google.cloud.vision.v1.*
 import com.google.protobuf.ByteString
+import jdk.nashorn.internal.objects.NativeRegExp.source
 
 @DslMarker
 annotation class ProtobufDsl
 
-fun annotateImageRequest(@ProtobufDsl block: AnnotateImageRequest.Builder.() -> Unit)
+fun AnnotateImageRequest(@ProtobufDsl block: AnnotateImageRequest.Builder.() -> Unit)
         : AnnotateImageRequest {
     val builder = AnnotateImageRequest.newBuilder()
 
@@ -41,7 +42,7 @@ fun Image.Builder.source(@ProtobufDsl block : ImageSource.Builder.() -> Unit) {
 }
 
 fun main(args: Array<String>) {
-    val request = annotateImageRequest {
+    val request = AnnotateImageRequest {
         features {
             type = Feature.Type.DOCUMENT_TEXT_DETECTION
             maxResults = 4
