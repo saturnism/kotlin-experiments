@@ -1,6 +1,8 @@
-package protobuf.dsl.option4
+package protobuf.dsl.option5
 
 import com.google.cloud.vision.v1.*
+import jdk.nashorn.internal.objects.NativeRegExp.source
+import protobuf.dsl.option3.AnnotateImageRequest
 
 @DslMarker
 annotation class ProtobufDsl
@@ -84,6 +86,12 @@ fun main(args: Array<String>) {
             source {
                 imageUri = "gs://my-bucket/hello.jpg'"
             }
+
+
+            /* can't do these things here:
+            build()
+            features {  }
+            */
         }
         features {
             feature {

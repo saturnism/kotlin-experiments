@@ -1,4 +1,4 @@
-package protobuf.dsl.option5
+package protobuf.dsl.option6
 
 import com.google.cloud.vision.v1.*
 

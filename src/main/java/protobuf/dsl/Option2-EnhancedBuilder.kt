@@ -32,7 +32,7 @@ fun AnnotateImageRequest.Builder.image(@ProtobufDsl block : Image.Builder.() -> 
     this.setImage(builder)
 }
 
-fun Image.Builder.source(block : ImageSource.Builder.() -> Unit) {
+fun Image.Builder.source(@ProtobufDsl block : ImageSource.Builder.() -> Unit) {
     val builder = ImageSource.newBuilder()
 
     builder.block()
