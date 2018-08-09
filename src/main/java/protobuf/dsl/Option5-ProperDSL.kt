@@ -87,6 +87,7 @@ fun main(args: Array<String>) {
                 imageUri = "gs://my-bucket/hello.jpg'"
             }
         }
+
         features {
             feature {
                 type = Feature.Type.DOCUMENT_TEXT_DETECTION

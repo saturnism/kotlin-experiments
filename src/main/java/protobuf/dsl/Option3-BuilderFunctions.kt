@@ -51,21 +51,6 @@ fun main(args: Array<String>) {
                }
        )
 
-       // :( Neat trick, but can be confusing
-       features {
-           +Feature {
-               type = Feature.Type.LANDMARK_DETECTION
-           }
-
-           +Feature {
-               type = Feature.Type.WEB_DETECTION
-           }
-
-           /* Not possible to call features in this nested call
-           features {  }
-           */
-       }
-
    }
 
    println(request)
