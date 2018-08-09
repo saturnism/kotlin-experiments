@@ -35,6 +35,7 @@ fun main(args: Array<String>) {
                     FeatureKt(Feature.Type.LABEL_DETECTION),
                     FeatureKt(Feature.Type.DOCUMENT_TEXT_DETECTION)
             )
+    // :( Need to convert to Proto object for Java library interop
     ).toProto()
 
     println(request)

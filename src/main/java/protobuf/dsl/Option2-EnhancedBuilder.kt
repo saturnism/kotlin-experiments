@@ -7,38 +7,19 @@ import jdk.nashorn.internal.objects.NativeRegExp.source
 @DslMarker
 annotation class ProtobufDsl
 
-fun AnnotateImageRequest(@ProtobufDsl block: AnnotateImageRequest.Builder.() -> Unit)
-        : AnnotateImageRequest {
-    val builder = AnnotateImageRequest.newBuilder()
-
-    builder.block()
-
-    // Builder object is now ready, go ahead and build the object
-    return builder.build()
-}
+fun AnnotateImageRequest(@ProtobufDsl block: AnnotateImageRequest.Builder.() -> Unit) =
+        AnnotateImageRequest.newBuilder().apply(block).build()
 
 fun AnnotateImageRequest.Builder.features(@ProtobufDsl block : Feature.Builder.() -> Unit) {
-    val builder = Feature.newBuilder()
-    builder.block()
-
-    this.addFeatures(builder)
+    this.addFeatures(Feature.newBuilder().apply(block))
 }
 
-
 fun AnnotateImageRequest.Builder.image(@ProtobufDsl block : Image.Builder.() -> Unit) {
-    val builder = Image.newBuilder()
-
-    builder.block()
-
-    this.setImage(builder)
+    this.setImage(Image.newBuilder().apply(block))
 }
 
 fun Image.Builder.source(@ProtobufDsl block : ImageSource.Builder.() -> Unit) {
-    val builder = ImageSource.newBuilder()
-
-    builder.block()
-
-    this.setSource(builder)
+    this.setSource(ImageSource.newBuilder().apply(block))
 }
 
 fun main(args: Array<String>) {

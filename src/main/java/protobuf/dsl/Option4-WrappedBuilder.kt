@@ -11,9 +11,7 @@ fun AnnotateImageRequest(block: AnnotateImageRequestDsl.() -> Unit)
     // Create the real builder here, but not accessible from within the DSL
     // DSL methods delegates to this builder
     val builder = AnnotateImageRequest.newBuilder()
-
-    val dsl = AnnotateImageRequestDsl(builder)
-    dsl.block()
+    AnnotateImageRequestDsl(builder).apply(block)
 
     // Builder object is now ready, go ahead and build the object
     return builder.build()
@@ -24,9 +22,7 @@ fun AnnotateImageRequest(block: AnnotateImageRequestDsl.() -> Unit)
 class AnnotateImageRequestDsl(private val builder: AnnotateImageRequest.Builder) {
     fun features(block : FeaturesDsl.() -> Unit) {
         val features = mutableSetOf<Feature>()
-        val dsl = FeaturesDsl(features)
-
-        dsl.block()
+        FeaturesDsl(features).apply(block)
 
         this.builder.addAllFeatures(features)
     }
@@ -75,10 +71,16 @@ fun main(args: Array<String>) {
         features {
             feature(Feature.Type.LABEL_DETECTION)
             feature(Feature.Type.DOCUMENT_TEXT_DETECTION)
+            /* :) can't access build
+            build()
+            */
         }
         image("gs://my-bucket/hello.jpg")
         imageContext {
             languageHints(listOf("en", "zh"))
+            /* :) DslMarker works, can't define undefinable things...
+            features {  }
+            */
         }
     }
 

@@ -12,8 +12,7 @@ fun AnnotateImageRequest(block: AnnotateImageRequestDsl.() -> Unit)
     // DSL methods delegates to this builder
     val builder = AnnotateImageRequest.newBuilder()
 
-    val dsl = AnnotateImageRequestDsl(builder)
-    dsl.block()
+    AnnotateImageRequestDsl(builder).apply(block)
 
     // Builder object is now ready, go ahead and build the object
     return builder.build()
@@ -24,28 +23,19 @@ fun AnnotateImageRequest(block: AnnotateImageRequestDsl.() -> Unit)
 class AnnotateImageRequestDsl(private val builder: AnnotateImageRequest.Builder) {
     fun features(block : FeaturesDsl.() -> Unit) {
         val features = mutableSetOf<Feature>()
-        val dsl = FeaturesDsl(features)
-
-        dsl.block()
-
+        FeaturesDsl(features).apply(block)
         this.builder.addAllFeatures(features)
     }
 
     fun image(block: ImageDsl.() -> Unit) {
         val localBuilder = Image.newBuilder();
-        val dsl = ImageDsl(localBuilder)
-
-        dsl.block()
-
+        ImageDsl(localBuilder).apply(block)
         this.builder.setImage(localBuilder.build())
     }
 
     fun imageContext(block: ImageContextDsl.() -> Unit) {
         val builder = ImageContext.newBuilder()
-        val dsl = ImageContextDsl(builder)
-
-        dsl.block()
-
+        ImageContextDsl(builder).apply(block)
         this.builder.imageContext = builder.build()
     }
 }
@@ -54,9 +44,7 @@ class AnnotateImageRequestDsl(private val builder: AnnotateImageRequest.Builder)
 class FeaturesDsl(private val features: MutableSet<Feature>) {
     fun feature(block : FeatureDsl.() -> Unit) {
         val builder = Feature.newBuilder()
-        val dsl = FeatureDsl(builder)
-
-        dsl.block()
+        val dsl = FeatureDsl(builder).apply(block)
 
         features.add(builder
                 .setType(dsl.type)
@@ -97,19 +85,12 @@ fun main(args: Array<String>) {
         image {
             source {
                 imageUri = "gs://my-bucket/hello.jpg'"
-
-                /* :( works here because this example passes the Builder type */
-                build()
             }
-
-            /* can't do these things here:
-            build()
-            features {  }
-            */
         }
         features {
             feature {
                 type = Feature.Type.DOCUMENT_TEXT_DETECTION
+
                 /* :) doesn't work here by using Dsl type
                 build()
                 */
@@ -120,6 +101,10 @@ fun main(args: Array<String>) {
         }
         imageContext {
             languageHints = listOf("en", "zh")
+
+            /* :) can't use things out of context
+            features { }
+            */
         }
     }
 

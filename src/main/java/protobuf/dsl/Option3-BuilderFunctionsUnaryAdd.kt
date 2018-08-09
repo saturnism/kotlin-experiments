@@ -5,29 +5,20 @@ import com.google.cloud.vision.v1.Feature
 import com.google.cloud.vision.v1.Image
 import com.google.cloud.vision.v1.ImageSource
 
-@DslMarker
-annotation class ProtobufDsl
-
-fun AnnotateImageRequest(@ProtobufDsl block: AnnotateImageRequest.Builder.() -> Unit) =
-        AnnotateImageRequest.newBuilder().apply(block).build()
-
-fun Image(@ProtobufDsl block: Image.Builder.() -> Unit): Image =
-        Image.newBuilder().apply(block).build()
-
-fun ImageSource(@ProtobufDsl block : ImageSource.Builder.() -> Unit) : ImageSource =
-        ImageSource.newBuilder().apply(block).build()
-
-fun Feature(@ProtobufDsl block : Feature.Builder.() -> Unit) : Feature =
-        Feature.newBuilder().apply(block).build()
-
-var AnnotateImageRequest.Builder.features : List<Feature>
-get() {
-    return this.featuresList
-}
-set(value) {
-    this.addAllFeatures(value)
+@ProtobufDsl
+class FEATURES() {
+    val list = ArrayList<Feature>()
+    operator fun Feature.unaryPlus() {
+        list += this
+    }
+    @Deprecated(level = DeprecationLevel.ERROR, message = "Incorrect context")
+    fun features(init : FEATURES.() -> Unit){}
 }
 
+fun AnnotateImageRequest.Builder.features(block : FEATURES.() -> Unit) {
+    val features = FEATURES()
+    this.addAllFeatures(features.apply(block).list)
+}
 
 fun main(args: Array<String>) {
    val request = AnnotateImageRequest {
@@ -43,13 +34,6 @@ fun main(args: Array<String>) {
            // :( doh
            build()
        }
-
-       // :D falls in line w/ the above idioms
-       features = listOf(
-               Feature {
-                   type = Feature.Type.WEB_DETECTION
-               }
-       )
 
        // :( Neat trick, but can be confusing
        features {
