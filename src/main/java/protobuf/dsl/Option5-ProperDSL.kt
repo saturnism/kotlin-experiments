@@ -98,7 +98,7 @@ fun main(args: Array<String>) {
             source {
                 imageUri = "gs://my-bucket/hello.jpg'"
 
-                /* :( works here if we pass the Builder type */
+                /* :( works here because this example passes the Builder type */
                 build()
             }
 

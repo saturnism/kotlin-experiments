@@ -4,7 +4,6 @@ import com.google.cloud.vision.v1.AnnotateImageRequest
 import com.google.cloud.vision.v1.Feature
 import com.google.cloud.vision.v1.Image
 import com.google.cloud.vision.v1.ImageSource
-import protobuf.dsl.option2.features
 
 @DslMarker
 annotation class ProtobufDsl
@@ -47,6 +46,29 @@ operator fun AnnotateImageRequest.Builder.plus(feature : Feature) {
     this.addFeatures(feature)
 }
 
+@ProtobufDsl
+class FEATURES() {
+    val list = ArrayList<Feature>()
+    operator fun Feature.unaryPlus() {
+        list += this
+    }
+    @Deprecated(level = DeprecationLevel.ERROR, message = "Incorrect context")
+    fun features(init : FEATURES.() -> Unit){}
+}
+
+fun AnnotateImageRequest.Builder.features(block : FEATURES.() -> Unit) {
+    val features = FEATURES()
+    this.addAllFeatures(features.apply(block).list)
+}
+
+var AnnotateImageRequest.Builder.features : List<Feature>
+get() {
+    return this.featuresList
+}
+set(value) {
+    this.addAllFeatures(value)
+}
+
 
 fun main(args: Array<String>) {
    val request = AnnotateImageRequest {
@@ -63,25 +85,29 @@ fun main(args: Array<String>) {
            build()
        }
 
-       // :( calling it multiple times, unclear which methods should be called multiple times
+       // :D falls in line w/ the above idioms
+       features = listOf(
+               Feature {
+                   type = Feature.Type.WEB_DETECTION
+               }
+       )
+
+       // :( Neat trick, but can be confusing
        features {
-           type = Feature.Type.IMAGE_PROPERTIES
+           +Feature {
+               type = Feature.Type.LANDMARK_DETECTION
+           }
+
+           +Feature {
+               type = Feature.Type.WEB_DETECTION
+           }
+
+           /* Not possible to call features in this nested call
+           features {  }
+           */
        }
 
-       features {
-           type = Feature.Type.LANDMARK_DETECTION
-       }
-
-       // :( not intuitable
-       this + Feature {
-           type = Feature.Type.DOCUMENT_TEXT_DETECTION
-       }
-
-       this + Feature {
-           type = Feature.Type.FACE_DETECTION
-       }
    }
-
 
    println(request)
 }
