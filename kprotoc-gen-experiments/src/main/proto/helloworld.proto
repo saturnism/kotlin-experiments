@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package com.example.kotlin.api.v1;
+
+option java_multiple_files = true;
+
+enum Sentiment {
+    HAPPY = 0;
+    SAD = 1;
+}
+
+message Address {
+    string street = 1;
+    string city = 2;
+}
+
+message HelloworldRequest {
+    string name = 1;
+    int64 age = 2;
+    repeated string hobbies = 3;
+    map<string, string> tricks = 4;
+    Sentiment sentiment = 5;
+    repeated Sentiment sentiments = 6;
+    Address address = 7;
+    repeated Address addresses = 8;
+
+    map<int64, Sentiment> emotions = 9;
+    map<string, Address> locations = 10;
+}
+
+message HelloworldResponse {
+    string greeting = 1;
+}

@@ -1,7 +1,6 @@
-package protobuf.dsl.option1
+package dsl.option1
 
 import com.google.cloud.vision.v1.*
-import com.google.protobuf.GeneratedMessageV3
 
 fun main(args: Array<String>) {
     val request = with (AnnotateImageRequest.newBuilder()) {

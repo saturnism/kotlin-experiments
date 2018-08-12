@@ -1,7 +1,6 @@
-package protobuf.dsl.option5
+package dsl.option5
 
 import com.google.cloud.vision.v1.*
-import jdk.nashorn.internal.objects.NativeRegExp.source
 
 @DslMarker
 annotation class ProtobufDsl

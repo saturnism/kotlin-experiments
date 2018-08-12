@@ -4,10 +4,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>groupId</groupId>
+    <groupId>com.example.kotlin</groupId>
     <artifactId>kotlin-experiments</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
 
     <properties>
         <kotlin.version>1.2.60</kotlin.version>
@@ -60,6 +60,12 @@
             </plugin>
         </plugins>
     </build>
+
+    <modules>
+        <module>protobuf-dsl-experiments</module>
+        <module>kprotoc</module>
+        <module>kprotoc-gen-experiments</module>
+    </modules>
 
 
     <dependencyManagement>

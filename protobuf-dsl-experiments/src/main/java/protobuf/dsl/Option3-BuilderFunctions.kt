@@ -1,4 +1,4 @@
-package protobuf.dsl.option3
+package dsl.option3
 
 import com.google.cloud.vision.v1.AnnotateImageRequest
 import com.google.cloud.vision.v1.Feature

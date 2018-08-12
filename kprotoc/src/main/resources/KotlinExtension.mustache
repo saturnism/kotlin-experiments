@@ -1,0 +1,31 @@
+{{#packageName}}
+package {{packageName}};
+{{/packageName}}
+{{#messageTypes}}
+{{#deprecated}}@Deprecated{{/deprecated}}
+@javax.annotation.Generated(
+value = "by Kotlin Extension generator",
+comments = "Source: {{protoName}}")
+fun {{className}}(block: {{javaClassName}}.Builder.() -> Unit) = {{javaClassName}}.newBuilder().apply(block).build()
+{{#repeatedFields}}
+var {{javaClassName}}.Builder.{{name}} : List<{{repeatedClassName}}>
+get() {
+    return this.{{name}}List
+}
+set(value) {
+    this.clear{{nameCamelcase}}()
+    this.addAll{{nameCamelcase}}(value)
+}
+{{/repeatedFields}}
+{{#mapFields}}
+var {{javaClassName}}.Builder.{{name}} : {{&mapType}}
+get() {
+    return this.{{name}}Map
+}
+set(value) {
+    this.clear{{nameCamelcase}}()
+    this.putAll{{nameCamelcase}}(value)
+}
+{{/mapFields}}
+{{/messageTypes}}
+

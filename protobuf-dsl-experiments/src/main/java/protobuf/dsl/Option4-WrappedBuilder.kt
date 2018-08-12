@@ -1,4 +1,4 @@
-package protobuf.dsl.option4
+package dsl.option4
 
 import com.google.cloud.vision.v1.*
 import com.google.protobuf.ByteString
